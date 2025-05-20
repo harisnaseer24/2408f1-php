@@ -2,7 +2,7 @@
      <!-- place navbar here -->
              <?php 
              
-             include './components/navbar.php';
+             include './components/header.php';
              ?>
       
         <main>
