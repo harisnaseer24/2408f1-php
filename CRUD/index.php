@@ -17,7 +17,7 @@
                     echo '
                      <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="card" >
-  <img src="'.$row["image"].'" class="card-img-top" alt="..." height="350">
+  <img src="./uploads/'.$row["image"].'" class="card-img-top" alt="..." height="350">
   <div class="card-body">
     <h5 class="card-title">'.$row["title"].'</h5>
     <p class="card-text">'.$row["description"].'.</p>
