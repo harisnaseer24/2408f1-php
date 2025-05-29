@@ -35,7 +35,7 @@
       <td>'.$row["stock"].' Units</td>
       <td>Rs. '.$row["price"].'</td>
       <td>
-       <a class="btn btn-info btn-sm">Edit</a>
+       <a class="btn btn-info btn-sm" href="editproduct.php?id='.$id.'">Edit</a>
       <a class="btn btn-info btn-sm" href="deleteproduct.php?id='.$id.'">Delete</a>
       </td>
    
