@@ -7,12 +7,17 @@ if(isset($_POST['signup'])){
 $username=mysqli_real_escape_string($conn, $_POST['username']);
 $email=mysqli_real_escape_string($conn, $_POST['email']);
 $password=mysqli_real_escape_string($conn, $_POST['password']);
+
+$checkUser= "SELECT * from users WHERE email='$email'";
+$checkUserResult= mysqli_query($conn,$checkUser);
+
+if(mysqli_num_rows($checkUserResult) != 1){
+	
 // Hashing /encrypting password
 // 123 ---> 498rhfriy83Fuiyt43y4rify836784578y4erhfreh
 $securePassword= password_hash($password,PASSWORD_BCRYPT);
 // $securePassword= md5($password);
 // echo $securePassword;
-
 $query ="INSERT INTO `users`( `username`, `email`, `password`) VALUES ('$username','$email','$securePassword')";
 $result = mysqli_query($conn,$query);
 if($result){
@@ -23,12 +28,15 @@ location.href ='./login.php'
 }else{
 	echo "<script>alert('Failed to register user')
 
-
 </script>";
 }
 
+}else{
+echo "<script>alert('User already registered')
+location.href ='./login.php'
 
-
+</script>";
+}
 
 }
 

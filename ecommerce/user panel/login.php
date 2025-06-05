@@ -1,12 +1,36 @@
-<!-- 
+<?php 
+require_once '../config/config.php';
+if(isset($_POST['login'])){
+$email=mysqli_real_escape_string($conn, $_POST['email']);
+$password=mysqli_real_escape_string($conn, $_POST['password']);
+$checkUser= "SELECT * from users WHERE email='$email'";
+$checkUserResult= mysqli_query($conn,$checkUser);
+if(mysqli_num_rows($checkUserResult) == 1){
+	$row = mysqli_fetch_assoc($checkUserResult);
+
+$verifyPassword = password_verify($password, $row["password"]);
+if($verifyPassword){
+	echo "<script>alert('Login Success')
+location.href ='./index.php'</script>";
+}else{
+	echo "<script>alert('Incorrect Password')
+</script>";
+}
+}else{
+echo "<script>alert('User not found')
+location.href ='./signup.php'
+</script>";
+}
+}
 ?>
 
 
 
-<script>alert('Signup Success')
-location.href ="./login.php"
 
-</script>
+
+
+
+
 
 <!doctype html>
 <html lang="en">
@@ -47,9 +71,7 @@ location.href ="./login.php"
 							<h3 class="title">Login </h3>
 						</div>
 					
-							<div class="form-group my-3">
-								<input class="input" type="text" name="username" placeholder="Username">
-							</div>
+						
 							
 							<div class="form-group my-3">
 								<input class="input" type="email" name="email" placeholder="Email">
@@ -65,7 +87,7 @@ location.href ="./login.php"
 								I've read and accept the <a href="#">terms & conditions</a>
 							</label>
 						</div>
-						<button type="submit" name="signup" class="primary-btn order-submit">Signup</button>
+						<button type="submit" name="login" class="primary-btn order-submit">Login</button>
 					</div>
 					</div>
 					</form>
