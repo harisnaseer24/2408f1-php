@@ -9,7 +9,16 @@ if(mysqli_num_rows($checkUserResult) == 1){
 	$row = mysqli_fetch_assoc($checkUserResult);
 
 $verifyPassword = password_verify($password, $row["password"]);
+
 if($verifyPassword){
+	session_start();
+	$_SESSION['email']=$email;
+	$_SESSION['role']= $row['role'];
+
+
+
+
+
 	echo "<script>alert('Login Success')
 location.href ='./index.php'</script>";
 }else{
@@ -24,12 +33,8 @@ location.href ='./signup.php'
 }
 ?>
 
-
-
-
-
-
-
+<!-- Authentication
+Authorization -->
 
 
 <!doctype html>
