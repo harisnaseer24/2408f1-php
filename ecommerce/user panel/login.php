@@ -14,13 +14,23 @@ if($verifyPassword){
 	session_start();
 	$_SESSION['email']=$email;
 	$_SESSION['role']= $row['role'];
+// echo "<script>alert('".$row['role']."')";
+	$_SESSION['isLoggedIn']= true;
+	
 
+if ($_SESSION['role']=="admin") {
 
-
-
-
+	echo "<script>alert('Login Successfully as admin')
+location.href ='../admin panel/index.php'</script>";
+} else {
+	
 	echo "<script>alert('Login Success')
 location.href ='./index.php'</script>";
+
+}
+
+
+
 }else{
 	echo "<script>alert('Incorrect Password')
 </script>";
