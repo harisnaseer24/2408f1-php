@@ -11,7 +11,7 @@ require_once "../config/config.php";
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <title>Harify Ecommerce Store Admin</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -108,6 +108,28 @@ require_once "../config/config.php";
                   <i class="fa fa-ellipsis-h"></i>
                 </span>
                 <h4 class="text-section">Components</h4>
+              </li>
+
+               <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                  <i class="fas fa-th-list"></i>
+                  <p>Product Management</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="sidebarLayouts">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="products.php">
+                        <span class="sub-item">View all producst</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="addproduct.php">
+                        <span class="sub-item">Add a new product</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </li>
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
