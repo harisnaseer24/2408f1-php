@@ -52,17 +52,22 @@ include_once "./components/header.php"
                         $result=mysqli_query($conn,$getProducts);
                         if(mysqli_num_rows($result) > 0){
                             while($row= mysqli_fetch_assoc($result)){
-                           
+                           $id=$row["product_id"];
+                           $image=$row["image"];
                               echo '
                                 <tr>
                                 <td>'.$row["product_id"].'</td>
                           <td>'.$row["title"].'</td>
-                          <td>'.$row["image"].'</td>
+                          <td><img src="./uploads/'.$image.'" class="rounded-circle" height=40/></td>
                           <td>'.$row["description"].'</td>
                           <td>'.$row["price"].'</td>
                           <td>'.$row["stock"].'</td>
                           <td>'.$row["cat_name"].'</td>
-                          <td> Edit | Delete</td>
+                          <td> 
+                          <a class="btn btn-danger" href="deleteproduct.php?id='.$id.'">Delete</a>
+                          <a class="btn btn-danger" href="editproduct.php?id='.$id.'">Edit</a>
+                          
+                          </td>
                           
                         </tr>';
                             }

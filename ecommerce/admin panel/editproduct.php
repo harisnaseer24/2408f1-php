@@ -1,50 +1,35 @@
+
 <?php 
+if(isset($_GET["id"])){
+$id = $_GET['id'];
 include_once "./components/header.php";
 
-if(isset($_POST['addproduct'])){
-    $title= $_POST['title'];
-    $description= $_POST['description'];
-    $price= $_POST['price'];
-    $stock= $_POST['stock'];
-    $cat_id= $_POST['cat_id'];
-    $validExtensions= ["jpg", "jpeg", "jfif","png", "webp"];
-    $imageName= $_FILES['image']['name'];
+$getQuery= "SELECT * From `products` WHERE product_id=$id";
+$result= mysqli_query($conn,$getQuery);
+if($result){
+      $row = mysqli_fetch_assoc($result);
+      $image = $row['image'];
+      $title = $row['title'];
+      $price = $row['price'];
+      $description = $row['description'];
+      $stock = $row['stock'];
+      $cat_id = $row['cat_id']
 
-    $extension= explode('.',$imageName)[1];//on.png ==> ["on", "png"]
-    echo $extension;
 
-    if($_FILES['image']['error']==4){
-        echo "<script>alert('Please select image first')</script>";
-    }
-   else if ($_FILES['image']['size'] > 2000000){
- echo "<script>alert('File is too large')</script>";
-   }
-   else if (!in_array($extension, $validExtensions)){
- echo "<script>alert('Invalid File format')</script>";
-   }
-   else{
-
-    $query="INSERT INTO `products`( `title`, `description`, `image`, `price`, `stock`,`cat_id`) VALUES ('$title','$description','$imageName',$price,$stock,$cat_id)";
-
-    $result= mysqli_query($conn,$query);
-    if($result){
-          move_uploaded_file($_FILES['image']['tmp_name'],"uploads/".$imageName);
-         echo "<script>alert('Product added succesfully')</script>";
-        }
-        else{
-        echo "<script>alert('Failed to add product')</script>";
-    }
-   }
-}
 ?>
+
+
+
 
         <div class="container">
           <div class="page-inner">
            
-            <form action="" enctype="multipart/form-data" method="post">
+            <form action="processedit.php" enctype="multipart/form-data" method="post">
                 <div class="form-group">
+                    <input type="hidden" name="product_id" value="<?=$id?>">
                           <label for="title">Product title</label>
                           <input
+                          value="<?=$title?>"
                             type="text"
                             class="form-control"
                             name="title"
@@ -55,6 +40,7 @@ if(isset($_POST['addproduct'])){
                 <div class="form-group">
                           <label for="description">Product description</label>
                           <input
+                          value="<?=$description?>"
                             type="text"
                             class="form-control"
                             name="description"
@@ -65,6 +51,7 @@ if(isset($_POST['addproduct'])){
                 <div class="form-group">
                           <label for="price">Product price</label>
                           <input
+                          value="<?=$price?>"
                             type="number"
                             class="form-control"
                             name="price"
@@ -75,6 +62,7 @@ if(isset($_POST['addproduct'])){
                 <div class="form-group">
                           <label for="stock">Product stock</label>
                           <input
+                          value="<?=$stock?>"
                             type="number"
                             class="form-control"
                             name="stock"
@@ -109,6 +97,7 @@ if(isset($_POST['addproduct'])){
                             >Product image</label
                           >
                           <input
+
                             type="file"
                             class="form-control-file"
                             id="exampleFormControlFile1"
@@ -116,7 +105,7 @@ if(isset($_POST['addproduct'])){
                           />
                         </div>
                          <div class="card-action">
-                    <button class="btn btn-success" type="submit" name="addproduct">Add product</button>
+                    <button class="btn btn-success" type="submit" name="editproduct">Edit product</button>
                     <button class="btn btn-danger">Cancel</button>
                   </div>
             </form>
@@ -125,6 +114,14 @@ if(isset($_POST['addproduct'])){
           </div>
         </div>
  <?php 
+}
      include_once "./components/footer.php";
-     
+                        }
+
+
+
+else{
+    header("Location: products.php");
+}
+
      ?>
