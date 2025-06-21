@@ -1,6 +1,27 @@
 
 <?php 
 include_once './components/header.php';
+require_once '../config/config.php';
+
+if(isset($_GET["id"])){
+$id = $_GET['id'];
+
+
+$getQuery= "SELECT * FROM `products` as p inner join categories as c on p.cat_id=c.cat_id WHERE product_id=$id";
+$result= mysqli_query($conn,$getQuery);
+if($result){
+      $row = mysqli_fetch_assoc($result);
+      $image = $row['image'];
+      $title = $row['title'];
+      $price = $row['price'];
+      $description = $row['description'];
+      $stock = $row['stock'];
+      $cat_id = $row['cat_id']
+
+
+
+
+
 ?>
 		<!-- BREADCRUMB -->
 		<div id="breadcrumb" class="section">
@@ -34,19 +55,19 @@ include_once './components/header.php';
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							<div class="product-preview">
-								<img src="./img/product01.png" alt="">
+								<img src="../admin panel/uploads/<?= $image?>" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product03.png" alt="">
+							<img src="../admin panel/uploads/<?= $image?>" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product06.png" alt="">
+							<img src="../admin panel/uploads/<?= $image?>" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product08.png" alt="">
+								<img src="../admin panel/uploads/<?= $image?>" alt="">
 							</div>
 						</div>
 					</div>
@@ -77,7 +98,7 @@ include_once './components/header.php';
 					<!-- Product details -->
 					<div class="col-md-5">
 						<div class="product-details">
-							<h2 class="product-name">product name goes here</h2>
+							<h2 class="product-name"><?=$title?></h2>
 							<div>
 								<div class="product-rating">
 									<i class="fa fa-star"></i>
@@ -89,10 +110,10 @@ include_once './components/header.php';
 								<a class="review-link" href="#">10 Review(s) | Add your review</a>
 							</div>
 							<div>
-								<h3 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h3>
-								<span class="product-available">In Stock</span>
+								<h3 class="product-price"><?= $price?> <del class="product-old-price"><?= $price?> </del></h3>
+								<span class="product-available"><?= $stock?> </span>
 							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+							<p><?= $description?> .</p>
 
 							<div class="product-options">
 								<label>
@@ -540,6 +561,15 @@ include_once './components/header.php';
 		<!-- /NEWSLETTER -->
 
 		
-<?php 
-include_once './components/footer.php';
-?>
+ <?php 
+}
+     include_once "./components/footer.php";
+                        }
+
+
+
+else{
+    header("Location: products.php");
+}
+
+     ?>
