@@ -12,6 +12,7 @@ $result= mysqli_query($conn,$getQuery);
 if($result){
       $row = mysqli_fetch_assoc($result);
       $image = $row['image'];
+      $id = $row['product_id'];
       $title = $row['title'];
       $price = $row['price'];
       $description = $row['description'];
@@ -77,19 +78,19 @@ if($result){
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
 							<div class="product-preview">
-								<img src="./img/product01.png" alt="">
+								<img src="../admin panel/uploads/<?= $image?>"  alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product03.png" alt="">
+								<img src="../admin panel/uploads/<?= $image?>"  alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product06.png" alt="">
+								<img src="../admin panel/uploads/<?= $image?>"  alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product08.png" alt="">
+								<img src="../admin panel/uploads/<?= $image?>"  alt="">
 							</div>
 						</div>
 					</div>
@@ -107,7 +108,7 @@ if($result){
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star-o"></i>
 								</div>
-								<a class="review-link" href="#">10 Review(s) | Add your review</a>
+								<!-- <a class="review-link" href="#">10 Review(s) | Add your review</a> -->
 							</div>
 							<div>
 								<h3 class="product-price"><?= $price?> <del class="product-old-price"><?= $price?> </del></h3>
@@ -131,15 +132,19 @@ if($result){
 							</div>
 
 							<div class="add-to-cart">
-								<div class="qty-label">
-									Qty
-									<div class="input-number">
-										<input type="number">
-										<span class="qty-up">+</span>
-										<span class="qty-down">-</span>
+								<form action="addtocart.php" method="post">
+										<input type="hidden" name="product_id" value="<?=$id?>">
+										<input type="hidden" name="price" value="<?=$price?>">
+									<div class="qty-label">
+										Qty
+										<div class="input-number">
+											<input type="number" name="qty">
+											<span class="qty-up">+</span>
+											<span class="qty-down">-</span>
+										</div>
 									</div>
-								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+									<button type="submit" name="addtocart" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								</form>
 							</div>
 
 							<ul class="product-btns">

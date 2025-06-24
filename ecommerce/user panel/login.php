@@ -14,6 +14,7 @@ if($verifyPassword){
 	session_start();
 	$_SESSION['email']=$email;
 	$_SESSION['role']= $row['role'];
+	$_SESSION['user_id']= $row['user_id'];
 // echo "<script>alert('".$row['role']."')";
 	$_SESSION['isLoggedIn']= true;
 	

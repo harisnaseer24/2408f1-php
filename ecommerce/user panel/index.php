@@ -119,11 +119,6 @@ require_once '../config/config.php';
 										while($row=mysqli_fetch_assoc($result)){
 											$image= $row['image'];
 											$id= $row['product_id'];
-
-
-
-
-
 echo '
 										<!-- product -->
 										<div class="product">
