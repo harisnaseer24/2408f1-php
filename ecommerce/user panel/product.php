@@ -138,7 +138,7 @@ if($result){
 									<div class="qty-label">
 										Qty
 										<div class="input-number">
-											<input type="number" name="qty">
+											<input type="number" value="1" name="qty">
 											<span class="qty-up">+</span>
 											<span class="qty-down">-</span>
 										</div>
