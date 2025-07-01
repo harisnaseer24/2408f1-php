@@ -35,7 +35,8 @@ location.href= "./index.php"
 </script>
 ';
     } else {
-        echo'
+        echo
+        '
 <script>alert("Failed to add product")
 location.href= "./index.php"
 </script>
