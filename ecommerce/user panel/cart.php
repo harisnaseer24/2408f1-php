@@ -12,7 +12,8 @@ $userId=$_SESSION["user_id"];
 $grandTotal=0;
 
 ?>
-<div class="container my-5">
+
+<div class="container my-5" style="min-height: 90vh; margin-top:10vh">
 <div class="row">
     <div class="col-lg-8">
  <h2>Cart Items</h2>
@@ -37,7 +38,10 @@ ON c.product_id= p.product_id where c.user_id= $userId;";
   if(mysqli_num_rows($getCartItemsResult) > 0)
 {
     while($row= mysqli_fetch_assoc($getCartItemsResult)){
-        $image= $row["image"];
+    
+
+   
+      $image= $row["image"];
         $grandTotal += $row['total'];
         echo '
          <tr>
@@ -72,7 +76,7 @@ ON c.product_id= p.product_id where c.user_id= $userId;";
     <p>Total : Rs. <?=$grandTotal?></p>
     <p>Delivery Charges : Rs. 150</p>
     <h3>Subtotal: Rs. <?php echo $grandTotal+150 ?></h3>
-    <button class="btn btn-danger">Proceed to Checkout</button>
+    <a href="./checkout.php" class="btn btn-danger">Proceed to Checkout</a href="./checkout.php">
 </div>
     </div>
 </div>

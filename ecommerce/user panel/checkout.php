@@ -1,5 +1,16 @@
 <?php 
-include_once './components/header.php';
+include_once "./components/header.php";
+if(!isset($_SESSION["role"]) || $_SESSION["role"]!="user"){
+echo'
+<script>alert("Please login first")
+location.href= "./login.php"
+</script>
+';
+}
+require_once "../config/config.php";
+$userId=$_SESSION["user_id"];
+$grandTotal=0;
+
 ?>
 
 		<!-- NAVIGATION -->
@@ -74,71 +85,15 @@ include_once './components/header.php';
 							<div class="form-group">
 								<input class="input" type="text" name="city" placeholder="City">
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="country" placeholder="Country">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-							</div>
+							
 							<div class="form-group">
 								<input class="input" type="tel" name="tel" placeholder="Telephone">
 							</div>
-							<div class="form-group">
-								<div class="input-checkbox">
-									<input type="checkbox" id="create-account">
-									<label for="create-account">
-										<span></span>
-										Create Account?
-									</label>
-									<div class="caption">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-										<input class="input" type="password" name="password" placeholder="Enter Your Password">
-									</div>
-								</div>
-							</div>
+							
 						</div>
 						<!-- /Billing Details -->
 
-						<!-- Shiping Details -->
-						<div class="shiping-details">
-							<div class="section-title">
-								<h3 class="title">Shiping address</h3>
-							</div>
-							<div class="input-checkbox">
-								<input type="checkbox" id="shiping-address">
-								<label for="shiping-address">
-									<span></span>
-									Ship to a diffrent address?
-								</label>
-								<div class="caption">
-									<div class="form-group">
-										<input class="input" type="text" name="first-name" placeholder="First Name">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="last-name" placeholder="Last Name">
-									</div>
-									<div class="form-group">
-										<input class="input" type="email" name="email" placeholder="Email">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="address" placeholder="Address">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="city" placeholder="City">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="country" placeholder="Country">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-									</div>
-									<div class="form-group">
-										<input class="input" type="tel" name="tel" placeholder="Telephone">
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- /Shiping Details -->
+						
 
 						<!-- Order notes -->
 						<div class="order-notes">
@@ -157,23 +112,47 @@ include_once './components/header.php';
 								<div><strong>PRODUCT</strong></div>
 								<div><strong>TOTAL</strong></div>
 							</div>
+							
 							<div class="order-products">
-								<div class="order-col">
-									<div>1x Product Name Goes Here</div>
-									<div>$980.00</div>
-								</div>
-								<div class="order-col">
-									<div>2x Product Name Goes Here</div>
-									<div>$980.00</div>
-								</div>
+								<?php 
+  $getCartItems= "SELECT * FROM `cart` as c 
+INNER JOIN `products` as p
+ON c.product_id= p.product_id where c.user_id= $userId;";
+  $getCartItemsResult= mysqli_query($conn,$getCartItems);
+
+  if(mysqli_num_rows($getCartItemsResult) > 0)
+{
+    while($row= mysqli_fetch_assoc($getCartItemsResult)){
+    
+
+   
+      $image= $row["image"];
+        $grandTotal += $row['total'];
+							
+						echo	
+					'	<div class="order-col">
+									<div>'.$row["qty"].' X '.$row["title"].'</div>
+									<div>'.$row["total"].'</div>
+								</div>';
+	}
+}else{
+
+    echo '
+     <tr>
+      Please add something to cart first.
+    </tr>
+    ';
+}
+	?>
+							
 							</div>
 							<div class="order-col">
 								<div>Shiping</div>
-								<div><strong>FREE</strong></div>
+								<div><strong>Rs. 150</strong></div>
 							</div>
 							<div class="order-col">
 								<div><strong>TOTAL</strong></div>
-								<div><strong class="order-total">$2940.00</strong></div>
+								<div><strong class="order-total">Rs. <?=$grandTotal?></strong></div>
 							</div>
 						</div>
 						<div class="payment-method">
@@ -181,32 +160,13 @@ include_once './components/header.php';
 								<input type="radio" name="payment" id="payment-1">
 								<label for="payment-1">
 									<span></span>
-									Direct Bank Transfer
+									Cash on Delivery
 								</label>
 								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+									<p>Shipping charges are included in total.</p>
 								</div>
 							</div>
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-2">
-								<label for="payment-2">
-									<span></span>
-									Cheque Payment
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
-							</div>
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-3">
-								<label for="payment-3">
-									<span></span>
-									Paypal System
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
-							</div>
+							
 						</div>
 						<div class="input-checkbox">
 							<input type="checkbox" id="terms">
