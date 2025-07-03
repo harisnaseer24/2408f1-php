@@ -11,6 +11,8 @@ require_once "../config/config.php";
 $userId=$_SESSION["user_id"];
 $grandTotal=0;
 
+
+ 
 ?>
 
 		<!-- NAVIGATION -->
@@ -66,40 +68,34 @@ $grandTotal=0;
 
 					<div class="col-md-7">
 						<!-- Billing Details -->
+						 <form action="processorder.php" method="post">
 						<div class="billing-details">
 							<div class="section-title">
 								<h3 class="title">Billing address</h3>
 							</div>
+						
 							<div class="form-group">
-								<input class="input" type="text" name="first-name" placeholder="First Name">
+								<input class="input" name="address"  required type="text"  placeholder="Address">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="last-name" placeholder="Last Name">
+								
+								<input class="input" name="userId" type="hidden" value="<?=$userId?>">
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Address">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City">
+								<input class="input" name="city" required type="text"  placeholder="City">
 							</div>
 							
 							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Telephone">
+								<input class="input" name="contact" required type="tel"  placeholder="Contact no">
 							</div>
 							
 						</div>
+
 						<!-- /Billing Details -->
 
 						
 
-						<!-- Order notes -->
-						<div class="order-notes">
-							<textarea class="input" placeholder="Order Notes"></textarea>
-						</div>
-						<!-- /Order notes -->
+					
 					</div>
 
 					<!-- Order Details -->
@@ -115,12 +111,11 @@ $grandTotal=0;
 							
 							<div class="order-products">
 								<?php 
-  $getCartItems= "SELECT * FROM `cart` as c 
+								  $getCartItems= "SELECT * FROM `cart` as c 
 INNER JOIN `products` as p
 ON c.product_id= p.product_id where c.user_id= $userId;";
   $getCartItemsResult= mysqli_query($conn,$getCartItems);
-
-  if(mysqli_num_rows($getCartItemsResult) > 0)
+ if(mysqli_num_rows($getCartItemsResult) > 0)
 {
     while($row= mysqli_fetch_assoc($getCartItemsResult)){
     
@@ -128,6 +123,7 @@ ON c.product_id= p.product_id where c.user_id= $userId;";
    
       $image= $row["image"];
         $grandTotal += $row['total'];
+
 							
 						echo	
 					'	<div class="order-col">
@@ -157,7 +153,7 @@ ON c.product_id= p.product_id where c.user_id= $userId;";
 						</div>
 						<div class="payment-method">
 							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-1">
+								<input type="radio" name="payment" id="payment-1" required>
 								<label for="payment-1">
 									<span></span>
 									Cash on Delivery
@@ -169,14 +165,16 @@ ON c.product_id= p.product_id where c.user_id= $userId;";
 							
 						</div>
 						<div class="input-checkbox">
-							<input type="checkbox" id="terms">
+							<input type="checkbox" id="terms" required>
 							<label for="terms">
 								<span></span>
 								I've read and accept the <a href="#">terms & conditions</a>
 							</label>
 						</div>
-						<a href="#" class="primary-btn order-submit">Place order</a>
+						<input class="input" name="amount" type="hidden" value="<?=$grandTotal?>">
+						<button type="submit" name="checkout" class="primary-btn order-submit">Place order</button>
 					</div>
+					</form>
 					<!-- /Order Details -->
 				</div>
 				<!-- /row -->
